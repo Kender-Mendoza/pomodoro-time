@@ -8,8 +8,12 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("./views/mainWindow.ui", self)
-        self.timer = Chronometer(2, self.min, self.sec)
+        self.timer = Chronometer(5, self.min, self.sec)
+
+        # events of the btn
+        self.iniciar.clicked.connect(self.timer.init)
         self.pausar.clicked.connect(self.timer.pause)
+
             
 if __name__ == "__main__":
     app = QApplication(sys.argv)
