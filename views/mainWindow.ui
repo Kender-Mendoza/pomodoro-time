@@ -107,7 +107,7 @@
    <widget class="QPushButton" name="iniciar">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>0</x>
       <y>300</y>
       <width>100</width>
       <height>30</height>
@@ -133,7 +133,7 @@
    <widget class="QPushButton" name="pausar">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>120</x>
       <y>300</y>
       <width>100</width>
       <height>30</height>
@@ -141,6 +141,19 @@
     </property>
     <property name="text">
      <string>Pausar</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="reiniciar">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>300</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reiniciar</string>
     </property>
    </widget>
   </widget>

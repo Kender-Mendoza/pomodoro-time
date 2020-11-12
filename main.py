@@ -13,6 +13,7 @@ class Window(QMainWindow):
         # events of the btn
         self.iniciar.clicked.connect(self.timer.init)
         self.pausar.clicked.connect(self.timer.pause)
+        self.reiniciar.clicked.connect(self.timer.restart)
 
             
 if __name__ == "__main__":
