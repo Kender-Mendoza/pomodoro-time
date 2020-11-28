@@ -29,7 +29,7 @@
    <string>Pomodoro Tme</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: #eee;</string>
+   <string notr="true">background: #222831;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="min">
@@ -167,6 +167,24 @@
     </property>
     <property name="text">
      <string>Saltar</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="counter">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>21</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
   </widget>
