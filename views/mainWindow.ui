@@ -29,7 +29,7 @@
    <string>Pomodoro Tme</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: #eee;</string>
+   <string notr="true">background: #583d72;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="min">
@@ -130,7 +130,7 @@
      <string>...</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pausar">
+   <widget class="QPushButton" name="pause">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -141,6 +141,28 @@
     </property>
     <property name="text">
      <string>Pausar</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="counter">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>30</y>
+      <width>31</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>30</pointsize>
+      <italic>false</italic>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:#9f5f80;</string>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
   </widget>
