@@ -29,7 +29,7 @@
    <string>Pomodoro Tme</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: #222831;</string>
+   <string notr="true">background: #583d72;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="min">
@@ -104,10 +104,10 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="iniciar">
+   <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>60</x>
       <y>300</y>
       <width>100</width>
       <height>30</height>
@@ -130,10 +130,10 @@
      <string>...</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pausar">
+   <widget class="QPushButton" name="pause">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>200</x>
       <y>300</y>
       <width>100</width>
       <height>30</height>
@@ -143,30 +143,26 @@
      <string>Pausar</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="reiniciar">
+   <widget class="QLabel" name="counter">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>300</y>
-      <width>100</width>
-      <height>30</height>
+      <x>70</x>
+      <y>30</y>
+      <width>31</width>
+      <height>61</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Reiniciar</string>
+    <property name="font">
+     <font>
+      <pointsize>30</pointsize>
+      <italic>false</italic>
+     </font>
     </property>
-   </widget>
-   <widget class="QPushButton" name="saltar">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>300</y>
-      <width>100</width>
-      <height>30</height>
-     </rect>
+    <property name="styleSheet">
+     <string notr="true">color:#9f5f80;</string>
     </property>
     <property name="text">
-     <string>Saltar</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="counter">
