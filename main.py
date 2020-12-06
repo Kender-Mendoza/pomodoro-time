@@ -23,21 +23,24 @@ class Window(QMainWindow):
         # events
         self.start.clicked.connect(self._btnStart)
         self.pause.clicked.connect(self._btnPause)
-        self.thread = 0
+        self.thread = None
         
+        # Futures - Async
+        self.future = Future()
+        self.future.add_done_callback(self._chronometerFinish)
+        #self.future.add_done_callback() # Se le debe de asignar la funcion para reiniciar
 
-    def _btnStart(self):
+    def _btnStart(self):    
         '''
         Se le asigna un hilo al chronometro para que se ejecute aparte y no
         deterga la ejecucion de la interface.
         '''
         self.thread = threading.Thread(
-            target= self.timer.start,
-            args=(self._updateChronometerView, ),
+            target=(lambda: self.future.set_result(self.timer.start(self._updateChronometerView))),
             daemon=True
         )
 
-        self.thread.start() 
+        self.thread.start()
     
     def _btnPause(self):
         self.timer.pause()
@@ -52,9 +55,8 @@ class Window(QMainWindow):
         result = p.result()
         if result%2 != 0:
             self.counter.setText(str(p.result()))
-            print(format(p.result()))
+            logging.info(f'{result}')
             
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Window()

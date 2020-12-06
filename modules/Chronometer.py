@@ -3,7 +3,7 @@ from time import sleep
 
 class Chronometer():
     def __init__(self, minutes):
-        self.SECOND = 59
+        self.SECOND = 3
 
         self.min = minutes
         self.sec = 0
