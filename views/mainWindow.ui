@@ -104,10 +104,10 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="iniciar">
+   <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>60</x>
       <y>300</y>
       <width>100</width>
       <height>30</height>
@@ -133,7 +133,7 @@
    <widget class="QPushButton" name="pause">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>200</x>
       <y>300</y>
       <width>100</width>
       <height>30</height>

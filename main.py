@@ -8,6 +8,7 @@ import threading
 from concurrent.futures import Future
 
 import logging
+import time
 
 logging.basicConfig(level=logging.DEBUG, format='%(threadName)s %(message)s')
 
@@ -18,24 +19,33 @@ class Window(QMainWindow):
         uic.loadUi("./views/mainWindow.ui", self)
         
         self.timer = Chronometer(2)
-        self.pause.clicked.connect(self._test)
 
-        # Async
+        # events
+        self.start.clicked.connect(self._btnStart)
+        self.pause.clicked.connect(self._btnPause)
+        self.thread = 0
+        
+
+    def _btnStart(self):
+        '''
+        Se le asigna un hilo al chronometro para que se ejecute aparte y no
+        deterga la ejecucion de la interface.
+        '''
         self.thread = threading.Thread(
             target= self.timer.start,
             args=(self._updateChronometerView, ),
             daemon=True
         )
-        self.thread.start()
+
+        self.thread.start() 
+    
+    def _btnPause(self):
+        self.timer.pause()
 
     def _updateChronometerView(self,minute,second):
         self.min.setText(str(minute))
         self.sec.setText(str(second))
         logging.info(f'{minute}:{second}')
-
-    def _test(self):
-        logging.info("Estoy saludando de forma asyncrona")
-        
 
     # esta funcion esperara el resultado del cronometro
     def _chronometerFinish(self,p):
