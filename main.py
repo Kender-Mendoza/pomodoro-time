@@ -19,6 +19,7 @@ class Window(QMainWindow):
         uic.loadUi("./views/mainWindow.ui", self)
         
         self.timer = Chronometer(2)
+        self.count = 0
 
         # events
         self.start.clicked.connect(self._btnStart)
@@ -52,10 +53,11 @@ class Window(QMainWindow):
 
     # esta funcion esperara el resultado del cronometro
     def _chronometerFinish(self,p):
-        result = p.result()
-        if result%2 != 0:
+        self.count += p.result()
+
+        if self.count%2 != 0:
             self.counter.setText(str(p.result()))
-            logging.info(f'{result}')
+            logging.info(f'{self.count}')
             
 if __name__ == "__main__":
     app = QApplication(sys.argv)
