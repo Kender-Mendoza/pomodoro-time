@@ -18,33 +18,41 @@ class Window(QMainWindow):
         super().__init__()
         uic.loadUi("./views/mainWindow.ui", self)
         
-        self.timer = Chronometer(2)
+        self.timer = Chronometer(5)
         self.count = 0
+        self.pomoCount = 0
 
-        # events
+        # events btn
         self.start.clicked.connect(self._btnStart)
         self.pause.clicked.connect(self._btnPause)
-        self.thread = None
-        
-        # Futures - Async
-        self.future = Future()
-        self.future.add_done_callback(self._chronometerFinish)
-        #self.future.add_done_callback() # Se le debe de asignar la funcion para reiniciar
+        self.restart.clicked.connect(self._restartChro)
 
     def _btnStart(self):    
         '''
         Se le asigna un hilo al chronometro para que se ejecute aparte y no
         deterga la ejecucion de la interface.
         '''
+        self.future = Future()
+        self.future.add_done_callback(self._chronometerFinish)
+        
         self.thread = threading.Thread(
             target=(lambda: self.future.set_result(self.timer.start(self._updateChronometerView))),
             daemon=True
         )
-
         self.thread.start()
     
     def _btnPause(self):
         self.timer.pause()
+
+    def _restartChro(self):
+        # REVISAR LA PARTE DEL DESCANSO LARGO
+        minute = 5
+        if self.count%2 == 0: minute = 5 # pomodoro
+        else: 
+            if self.pomoCount%4 == 0: minute = 3 # descanso largo
+            else: minute = 1 # descanso corto
+        self.timer.restart(minute)
+        self._updateChronometerView(minute,0)
 
     def _updateChronometerView(self,minute,second):
         self.min.setText(str(minute))
@@ -56,8 +64,13 @@ class Window(QMainWindow):
         self.count += p.result()
 
         if self.count%2 != 0:
-            self.counter.setText(str(p.result()))
-            logging.info(f'{self.count}')
+            self.pomoCount += 1
+            self.counter.setText(str(self.pomoCount))
+        
+        logging.info(f'Numero de Cronometros: {self.count}')
+        logging.info(f'Numero de Pomodoros: {self.pomoCount}')
+
+        self._restartChro()
             
 if __name__ == "__main__":
     app = QApplication(sys.argv)

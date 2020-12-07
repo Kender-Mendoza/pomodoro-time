@@ -3,7 +3,7 @@ from time import sleep
 
 class Chronometer():
     def __init__(self, minutes):
-        self.SECOND = 3
+        self.SECOND = 0
 
         self.min = minutes
         self.sec = 0
@@ -37,3 +37,8 @@ class Chronometer():
     def pause(self):
         self.flag = True
         print(self.min,self.sec)
+
+    def restart(self, minutes):
+        self.flag = True
+        self.min = minutes
+        self.sec = 0
