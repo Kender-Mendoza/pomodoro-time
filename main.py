@@ -23,11 +23,12 @@ class Window(QMainWindow):
         self.pomoCount = 0
 
         # events btn
-        self.start.clicked.connect(self._btnStart)
-        self.pause.clicked.connect(self._btnPause)
-        self.restart.clicked.connect(self._restartChro)
+        self.start.clicked.connect(self._startChronometer)
+        self.pause.clicked.connect(self._pauseChronometer)
+        self.restart.clicked.connect(self._restartChronometer)
+        self.skip.clicked.connect(self._skipChronometer)
 
-    def _btnStart(self):    
+    def _startChronometer(self):    
         '''
         Se le asigna un hilo al chronometro para que se ejecute aparte y no
         deterga la ejecucion de la interface.
@@ -41,11 +42,10 @@ class Window(QMainWindow):
         )
         self.thread.start()
     
-    def _btnPause(self):
+    def _pauseChronometer(self):
         self.timer.pause()
 
-    def _restartChro(self):
-        # REVISAR LA PARTE DEL DESCANSO LARGO
+    def _restartChronometer(self):
         minute = 5
         if self.count%2 == 0: minute = 5 # pomodoro
         else: 
@@ -53,6 +53,10 @@ class Window(QMainWindow):
             else: minute = 1 # descanso corto
         self.timer.restart(minute)
         self._updateChronometerView(minute,0)
+
+    def _skipChronometer(self):
+        self.count += 1
+        self._restartChronometer()
 
     def _updateChronometerView(self,minute,second):
         self.min.setText(str(minute))
@@ -70,7 +74,7 @@ class Window(QMainWindow):
         logging.info(f'Numero de Cronometros: {self.count}')
         logging.info(f'Numero de Pomodoros: {self.pomoCount}')
 
-        self._restartChro()
+        self._restartChronometer()
             
 if __name__ == "__main__":
     app = QApplication(sys.argv)

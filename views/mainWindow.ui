@@ -178,6 +178,19 @@
      <string>Reiniciar</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="skip">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>350</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Saltar</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
