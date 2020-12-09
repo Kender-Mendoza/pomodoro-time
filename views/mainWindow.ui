@@ -107,8 +107,8 @@
    <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>300</y>
+      <x>50</x>
+      <y>290</y>
       <width>100</width>
       <height>30</height>
      </rect>
@@ -133,8 +133,8 @@
    <widget class="QPushButton" name="pause">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>300</y>
+      <x>50</x>
+      <y>290</y>
       <width>100</width>
       <height>30</height>
      </rect>
@@ -168,8 +168,8 @@
    <widget class="QPushButton" name="restart">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>350</y>
+      <x>200</x>
+      <y>290</y>
       <width>100</width>
       <height>30</height>
      </rect>
@@ -182,7 +182,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>350</y>
+      <y>290</y>
       <width>100</width>
       <height>30</height>
      </rect>
