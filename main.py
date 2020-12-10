@@ -33,29 +33,16 @@ class Window(QMainWindow):
         self.skip.clicked.connect(self._skipChronometer)
 
         # order btn
-        self.pause.setVisible(False)
-        self.skip.setVisible(False)
+        self._orderBtn('init')
         self.restart.setEnabled(False)
 
-
     def _startChronometer(self):
-        # order btn
-        if self._isPomodoro():
-            self.start.setText('continuar')
-            self.start.setVisible(False)
-            self.pause.setVisible(True)
-            self.restart.setEnabled(True)
-        else:
-            self.skip.setVisible(True)
-            self.restart.setVisible(False)
-            self.start.setVisible(False)
-            self.pause.setVisible(True)
+        if self._isPomodoro(): self._orderBtn('run')
+        else: self._orderBtn('auto')
+        self.restart.setEnabled(True)
 
-        '''
-        Se le asigna un hilo al chronometro para que se ejecute aparte y no
-        deterga la ejecucion de la interface.
-        '''
-
+        ''' Se le asigna un hilo al chronometro para que se ejecute aparte y no
+        deterga la ejecucion de la interface.'''
         self.future = Future()
         self.future.add_done_callback(self._chronometerFinish)
         
@@ -64,52 +51,37 @@ class Window(QMainWindow):
             daemon=True
         )
         self.thread.start()
-    
+
     def _pauseChronometer(self):
-        # order btn
-        self.pause.setVisible(False)
+        if self._isPomodoro(): self._orderBtn('init')
+        else: self._orderBtn('break') 
         self.start.setText('Continuar')
-        self.start.setVisible(True)
-        
+
         self.timer.pause()
 
     def _restartChronometer(self):
-        # order btn
-        self.skip.setVisible(False)
-        self.restart.setVisible(True)
-        self.restart.setEnabled(False)
+        self._orderBtn('init')
         self.start.setText('Iniciar')
-        self.start.setVisible(True)
-        self.pause.setVisible(False)
-
-        self.timer.restart(self.POMODORO)
-        self._updateChronometerView(self.POMODORO,0)
+        self.restart.setEnabled(False)
+        
+        self._restartView(self.POMODORO)
         
     def _skipChronometer(self):
-        # order btn
-        self.skip.setVisible(False)
-        self.restart.setVisible(True)
-        self.restart.setEnabled(False)
+        self._orderBtn('init')
         self.start.setText('Iniciar')
-        self.start.setVisible(True)
-        self.pause.setVisible(False)
+        self.restart.setEnabled(False)
 
         self.count += 1
-        '''Utilizo el metodo restart para reiniciar el cronometro con
-        la nueva cantidad de minutos (la de los pomodoros)'''
-        self.timer.restart(self.POMODORO)
-        self._updateChronometerView(self.POMODORO,0)
-
+        self._restartView(self.POMODORO)
 
     def _updateChronometerView(self,minute,second):
         self.min.setText(str(minute))
         self.sec.setText(str(second))
         logging.info(f'{minute}:{second}')
-
-    # esta funcion esperara el resultado del cronometro
+    
+    # future callback
     def _chronometerFinish(self,p):
         if p.result():
-
             self.count += p.result()
 
             if self.count%2 != 0:
@@ -117,17 +89,11 @@ class Window(QMainWindow):
                 self.counter.setText(str(self.pomoCount))
 
             minute = self._minuteQuantity() 
+            self._restartView(minute)
 
-            self.timer.restart(minute)
-            self._updateChronometerView(minute,0)
-
-            # order btn
-            self.skip.setVisible(False)
-            self.restart.setVisible(True)
-            self.restart.setEnabled(False)
+            self._orderBtn('init')            
             self.start.setText('Iniciar')
-            self.start.setVisible(True)
-            self.pause.setVisible(False)
+            self.restart.setEnabled(False)
 
             '''Esta condicional es para que el descanso se active
             automaticamente'''    
@@ -136,7 +102,7 @@ class Window(QMainWindow):
         logging.info(f'Numero de Cronometros: {self.count}')
         logging.info(f'Numero de Pomodoros: {self.pomoCount}')
 
-    
+    # "Usual" methods    
     def _isPomodoro(self):
         if self.count%2 == 0: return True
         else: return False
@@ -147,6 +113,31 @@ class Window(QMainWindow):
             if self.pomoCount%4 == 0: return self.LONG_BREAK
             else: return self.SHORT_BREAK
 
+    def _restartView(self, minutes):
+        self.timer.restart(minutes)
+        self._updateChronometerView(minutes,0)
+    
+    def _orderBtn(self, order):
+        if order == 'init': # btn en el orden inicial
+            self.start.setVisible(True)
+            self.pause.setVisible(False)
+            self.restart.setVisible(True)
+            self.skip.setVisible(False)
+        elif order == 'run': # btn cuando el contador este corriendo
+            self.start.setVisible(False)
+            self.pause.setVisible(True)
+            self.restart.setVisible(True)
+            self.skip.setVisible(False)
+        elif order == 'auto': # btn inicio automatico
+            self.start.setVisible(False)
+            self.pause.setVisible(True)
+            self.restart.setVisible(False)
+            self.skip.setVisible(True)
+        elif order == 'break':  # btn pause en el descanso
+            self.start.setVisible(True)
+            self.pause.setVisible(False)
+            self.restart.setVisible(False)
+            self.skip.setVisible(True)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
