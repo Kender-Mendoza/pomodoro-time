@@ -10,6 +10,8 @@ from concurrent.futures import Future
 import logging
 import time
 
+from playsound import playsound
+
 logging.basicConfig(level=logging.DEBUG, format='%(threadName)s %(message)s')
 
 # this class will create the main window
@@ -98,6 +100,8 @@ class Window(QMainWindow):
             '''Esta condicional es para que el descanso se active
             automaticamente'''    
             if not self._isPomodoro(): self._startChronometer()
+
+            playsound('./sounds/notification.mp3')
 
         logging.info(f'Numero de Cronometros: {self.count}')
         logging.info(f'Numero de Pomodoros: {self.pomoCount}')
